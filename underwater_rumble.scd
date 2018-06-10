@@ -14,7 +14,7 @@ SynthDef(\rumble_1, {
 }).add;
 )
 
-~noise = Synth.new(\rumble);
+~noise = Synth.new(\rumble_1);
 ~noise.set(\q, 0.1);
 ~noise.set(\fc, 48.midicps);
 ~noise.set(\out, 0);

@@ -1,5 +1,6 @@
 // SEASHORE test 1
 s.boot;
+s.quit;
 s.freeAll;
 s.meter;
 s.plotTree;
@@ -21,14 +22,14 @@ SynthDef.new(\single_wave, {
 	|pan=0, amp=0.9|
 	var sig, env, coeff;
 
-	var invstrenght = Rand(5, 15);
+	var invstrenght = Rand(3, 10);
 	var decay = invstrenght;
 	env = EnvGen.ar(Env.perc(0.01,decay), doneAction:2);
 	// select from 3 different noise sources
-	sig = Select.ar(Rand(0,2).round(1).poll, [
+	sig = Select.ar(Rand(0,1).round(1).poll, [
 		BrownNoise.ar(),
 		PinkNoise.ar(),
-		WhiteNoise.ar()*0.3
+		//WhiteNoise.ar()*0.3
 	]);
 	coeff = EnvGen.kr(Env.new([-0.99, 0.8], [invstrenght], curve:-2));
 	sig = OnePole.ar(sig, coeff);

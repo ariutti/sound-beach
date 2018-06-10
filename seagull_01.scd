@@ -13,14 +13,14 @@ s.freeAll;
 
 // ...and defining the seagull synth
 SynthDef.new(\seagull_A, {
-	|ls=1, ts=1|
+	|levelscale=1, timescale=1|
 	var sig, env, amp = 0.07;
 	var out = 16;
 	var pos= 0;
 	var freqA = 1500;
 	var freqB = freqA-300;
-	sig = SinOsc.ar(Line.kr( freqA*(1..3), freqB*(1..3), 0.160*ts) );
-	env = EnvGen.kr(~gull_levels_1, levelScale:ls, timeScale:ts, doneAction:2);
+	sig = SinOsc.ar(Line.kr( freqA*(1..3), freqB*(1..3), 0.160*timescale) );
+	env = EnvGen.kr(~gull_levels_1, levelScale:levelscales, timeScale:timescale, doneAction:2);
 	sig = sig * env * amp;
 	Out.ar(out, Pan2.ar(Splay.ar(sig, 0), pos));
 }).add;
@@ -53,6 +53,17 @@ p = Pbind.new(
 	\sustain, 2,
 ).play;
 )
+
+
+(
+p = Pbind.new(
+	\instrument, \seagull_A,
+	\ls,  Pseq([1, 0.9, 0.7, 0.3, 0.1]),
+	\ts,  Place([1,   0.75, Pseq([0.65], inf)]).trace, // 1
+	\dur, Place([0.6, 0.5, Pseq([0.25], inf)]), // 0.6
+	\sustain, 2,
+).play;
+)
 p.stop
 
 
@@ -68,3 +79,5 @@ SynthDef.new(\seagull, {
 	Out.ar(0, Pan2.ar(Splay.ar(sig, 0), pos));
 }).add;
 )
+
+x = Synth(\seagull);
