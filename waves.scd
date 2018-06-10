@@ -21,11 +21,11 @@ SynthDef.new(\single_wave, {
 	|pan=0, amp=0.9|
 	var sig, env, coeff;
 
-	var invstrenght = Rand(5, 15);
+	var invstrenght = Rand(2, 10);
 	var decay = invstrenght;
 	env = EnvGen.ar(Env.perc(0.01,decay), doneAction:2);
 	// select from 3 different noise sources
-	sig = Select.ar(Rand(0,2).round(1).poll, [
+	sig = Select.ar(Rand(0,2).round(1), [
 		BrownNoise.ar(),
 		PinkNoise.ar(),
 		WhiteNoise.ar()*0.3
